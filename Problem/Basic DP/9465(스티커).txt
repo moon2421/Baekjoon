@@ -1,0 +1,55 @@
+스티커한장을떼면, 스티커와 변을 공유하는 스티커는 모두 찢어져서 사용못함
+즉 뗀스티커의 왼쪽 오른쪽 위 아래 는 사용 x 
+
+스티커를 살수있는 최대비용을 구하면됨
+
+ 경우를 생각함
+
+1. 현재꺼를 안떼는경우
+2. 현재꺼의 위에꺼를 뗴는경우
+3. 현재꺼의 아래꺼를 뗴는 경우
+
+
+
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+long long dp[100001][3];
+long long arr[100001][2];
+
+
+int main() {
+	int n;
+	int k;
+	cin >> n;//테스트케이스 수입력
+	while (n--) {
+		
+		cin >> k;
+
+		for (int i = 1; i <= k; i++) {
+				cin >> arr[i][0];
+		}
+
+		for (int i = 1; i <= k; i++) {
+			cin >> arr[i][1];
+		}
+		dp[1][0] = 0;//안뗀경우
+		dp[1][1] = arr[1][0];  // 현재꺼위에꺼를뗀경우
+		dp[1][2] = arr[1][1];//현재꺼 아래꺼를 뗀경우
+
+		for (int i = 2; i <= k; i++) {
+			dp[i][0] = max(dp[i - 1][1], dp[i - 2][2]); //현재꺼를 안뗸경우
+			dp[i][0] = max(dp[i][0], max(dp[i - 1][2], dp[i - 2][1])); //현재꺼를안뗸경우
+			
+			dp[i][1] = max(arr[i][0] + dp[i - 1][2], max(arr[i][0] + dp[i - 2][1], arr[i][0] + dp[i - 2][2])); //현재꺼위에뗀경우
+			dp[i][2] = max(arr[i][1] + dp[i - 1][1], max(arr[i][1] + dp[i - 2][1], arr[i][1] + dp[i - 2][2]));//아래꺼를뗀경우
+		
+		}
+		cout << max(dp[k][0], max(dp[k][1], dp[k][2]))<<'\n';
+
+		}
+	
+
+	}
+

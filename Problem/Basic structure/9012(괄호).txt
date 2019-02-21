@@ -1,0 +1,39 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <queue>
+#include <stack>
+#include <string>
+using namespace std;
+
+char str[50];
+int main() {
+	int N;
+	int cnt=0;
+	string s;
+	cin >> N;
+	while (N--) {
+		cin >> s;
+		cnt = 0;
+		for (int i = 0; i < s.size(); i++) {
+			if (s[i] == '(')
+				cnt=cnt+1;
+			else 
+				cnt=cnt-1;
+		
+		}
+
+		if (cnt==0) {
+			printf("YES\n");
+		}
+		else
+			printf("NO\n");
+	}
+
+
+}
+
+열린괄호면 증가하고 닫힌괄호면 감소하게된다.
+즉 괄호의쌍이 맞으면 올바른괄호이고 cnt값은0이된다
+괄호의쌍이 안맞으면 cnt값은0보다작은값이된다.

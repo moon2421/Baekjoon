@@ -1,0 +1,39 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <queue>
+#include <stack>
+#include <string>
+using namespace std;
+
+stack <int>s;
+
+int main() {
+	string s1;
+	int sum = 0;
+	cin >> s1;
+
+	for (int i = 0; i <s1.size(); i++) {
+		if (s1[i] == '(')
+			s.push(i); //열린괄호면 스택에쌓음
+
+		else if (s1[i] == ')') {//닫힌괄호면
+			if (s.top() + 1 == i) {//탑에있는값과 1차이가 나면 레이저
+				s.pop();//레이저니까 뺴고
+				sum += s.size();//스택에있는값을누적
+			}
+			else { //레이저가아니고 쇠막대기면
+				s.pop();
+				sum += 1;
+			}
+		}
+	}
+	cout << sum;
+
+
+}
+스택에 인덱스번호를넣어 레이저인지 쇠막대기인지구별을할수있다
+
+닫힌괄호가올떄
+레이저는 스택의맨위값과 인덱스차이가 1이나고 쇠막대기는 차이가1이넘게난다

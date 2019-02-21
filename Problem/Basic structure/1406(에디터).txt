@@ -1,0 +1,91 @@
+스택을 사용한 에디터풀이
+
+커서를 left와 right로 기준을 두어 두개의스택으로 풀었습니다.
+처음에 문자열(abcd) 입력했을떄 커서는 문자열의맨끝에 가있습니다.
+abcd |  인상태 , 이떄 커서의왼쪽에있는것들을 왼쪽스택에 전부다집어넣습니다.
+왼쪽스택 상태 =abcd
+그다음 P x 를 통해 커서왼쪽에 x를 삽입하므로 
+abcdx | 가됩니다. (그럼 왼쪽 스택에는 abcdx )가 가득차있습니다
+그다음 L 명령을 통해 커서를 왼쪽으로 이동합니다.
+abcd | x 그럼 이런상태가되는데 커서의왼쪽에는 abcd만있어야하므로 x를 pop하여 Right스택에 집어넣습니다.
+왼쪽스택= abcd , 오른쪽스택 = x 인상태
+그다음 p y를 하면 abcdy| x 가됩니다.
+마지막으로 왼쪽스택에있는것을 오른쪽으로옮기고 오른쪽에있는것을 pop을하면서 출력을하면됩니다.
+그리고 B명령은 left에있는것을 pop하여삭제하고
+D명령은 오른쪽으로커서를옮기니 left에있는것을 오른쪽으로 push하면됩니다.
+
+
+
+
+#include <cstdio>
+#include <cstring>
+#include <stack>
+using namespace std;
+
+using namespace std;
+
+
+
+int main() {
+
+
+	char a[600000];//문자열입력
+	scanf("%s", a);
+	int input;
+	int len = strlen(a);
+	stack<char>left;//left스택
+	stack<char>right; //right스택
+
+
+	scanf("%d", &input); //명령반복수입력
+
+
+	for (int i = 0; i < len; i++) {
+		left.push(a[i]); //스택안에 문자넣기
+	}
+
+	while (input--) { //명령문실행
+		char command;
+		scanf(" %c", &command);//명령어입력
+
+		if (command == 'L') {
+			if (!left.empty()) {
+				right.push(left.top());
+				left.pop();
+			}
+
+		}
+
+		else if (command == 'P') {
+			char what;
+			scanf(" %c", &what); //값을넣음
+			left.push(what);
+		}
+		else if (command == 'B') {
+			if (!left.empty()) {
+				left.pop();
+			}
+		}
+		else {
+			if (!right.empty()) {
+				left.push(right.top());
+				right.pop();
+			}
+		}
+	}
+
+
+
+	while (!left.empty()) {
+		right.push(left.top());
+		left.pop();
+	}
+
+	while (!right.empty()) {
+		printf("%c", right.top());
+		right.pop();
+	}
+
+
+
+}
