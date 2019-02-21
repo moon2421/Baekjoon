@@ -1,0 +1,35 @@
+그림에서 보이는 12를 i번쨰로잡으 반시계방향으로 i-1 i-2 i-3 i-4 i-5 돌면
+i-1번쨰와 i번쨰의합으로 변을구할수있다는것을안다
+
+
+#include <iostream>
+
+long long dp[101]; 
+using namespace std;
+
+
+
+
+int main() {
+	int input;
+	cin >> input;
+	dp[1] = 1;
+	dp[2] = 1;
+	dp[3] = 1;
+	dp[4] = 2;
+	dp[5] = 2;
+
+
+	while (input--) {
+		int a;
+		cin >> a;
+		for (int i = 6; i <= a; i++) {
+			dp[i] = dp[i - 1] + dp[i - 5];
+		}
+		cout << dp[a] << endl;
+	}
+	
+
+	return 0;
+
+}

@@ -1,0 +1,25 @@
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int dp[10001][2];
+int arr[10001];
+
+
+int main() {
+	int n;
+
+	cin >> n;//테스트케이스 수입력
+
+	for (int i = 1; i <= n; i++) {
+		cin >> arr[i];
+	}
+	
+	for (int i = 1; i <= n; i++) {
+		dp[i][1] = max(dp[i - 2][2], dp[i - 2][1]) + arr[i];						//현재계단까지한번에 올라오는경우
+		dp[i][2] = dp[i - 1][1]+arr[i];					//현제계단까지 두번만에 올라오는법
+	}
+	cout << max(dp[n][1], dp[n][2]);
+	
+}
+
