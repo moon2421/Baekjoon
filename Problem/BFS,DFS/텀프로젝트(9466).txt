@@ -1,0 +1,63 @@
+싸이클이 이루어지면 = 한팀이가능
+
+안되면 x 
+
+cnt로 하나하나증가시킨다음 싸이클이 발생하는지점에서 원래의 cnt를 뺴면 총 싸이클의 개수가나옴
+
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+using namespace std;
+
+
+
+int cnt[100001];
+int dfscheck[100001];
+int graph[100001];
+int dfs(int start,int c,int p) {
+	if (dfscheck[start] != 0) { //이미방문을했고
+		if (dfscheck[start] == p) { //현재 dfs에서 방문을했으면
+			return c - cnt[start]; //싸이클이 발생한지점을 뺴면 싸이클개수가나옴
+		}
+		else
+			return 0;
+		}
+	
+	
+	dfscheck[start] = p;//방문완료
+	cnt[start] = c;
+	int next = graph[start];
+	dfs(next, c + 1, p);
+
+}
+
+int main() {
+	int n;
+	cin >> n;
+	while (n--) {
+		memset(dfscheck, false, sizeof(dfscheck));
+		memset(graph, false, sizeof(graph));
+		memset(cnt, false, sizeof(cnt));
+		int E;//간선입력
+		cin >> E;
+		for (int i = 1; i <= E; i++) {
+			int num;
+			cin >> num;
+			graph[i] = num;
+		}
+		int ans = 0;
+		for (int i = 1; i <= E; i++) {
+			if (dfscheck[i] == 0) {//아직순회를 하지않은 dfs면
+				ans+=dfs(i, 1, i);//순회
+			}
+		}
+		cout << E - ans << '\n';
+
+	}
+	
+	return 0;
+}

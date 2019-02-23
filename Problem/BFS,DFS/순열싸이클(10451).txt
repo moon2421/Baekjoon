@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+using namespace std;
+int graph[20001];
+int check[20001];
+int E;
+
+
+void dfs(int start) {
+	check[start] = 1;
+	int next = graph[start];
+	
+	if (check[next] == 0)
+		dfs(next);
+	
+}
+
+int main() {
+	int n;
+	cin >> n;
+
+	while (n--) {
+	
+		cin >>E;
+		for (int i = 1; i <= E; i++) {
+			graph[i] = 0;
+			check[i] = 0;
+		}
+
+		for (int i = 1; i <=E; i++) {
+			int input;
+			cin >> input;
+			graph[i] = input;
+		
+		}
+		int cnt = 0;
+		for (int i = 1; i <= E; i++) {
+			if (check[i] == 0) {
+				dfs(i);
+				cnt++;
+			}
+		}
+		cout<<cnt<<'\n';
+
+	}
+
+	
+	return 0;
+}

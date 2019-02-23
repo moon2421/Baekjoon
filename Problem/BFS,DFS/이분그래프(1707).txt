@@ -1,0 +1,72 @@
+이분그래프 : 정점의 집합을 둘로 분할하여 각집합에 속한 정점끼리는 서로 인접하지않도록분할할수있을떄
+
+
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+using namespace std;
+vector <int>graph[20001];
+int color[20001]; //다음정점을 방문할떄마다 색깔부여
+
+
+
+void dfs(int start,int c) {
+	color[start] = c;//방문완료
+
+	for (int i = 0; i < graph[start].size(); i++) {//그래프내부에 연결된 간선들
+		int idx = graph[start][i];//연결된 인접간선찾음
+		if (color[idx] == 0) {//미방문이면
+			dfs(idx,3-c);//색깔을 부여하고 방문
+		}
+	}
+
+}
+
+int main() {
+	int n;
+	cin >> n;
+
+	while (n--) {
+		int V, E;
+		cin >>V>>E;
+		for (int i = 1; i <= V; i++) {
+			graph[i].clear();
+			color[i] = 0;
+		}
+
+		for (int i = 0; i < E; i++) {
+			int a, b;
+			cin >> a >> b;
+			graph[a].push_back(b);
+			graph[b].push_back(a);
+		}
+		for (int i = 1; i <= V; i++) {
+			if (color[i] == 0) { //미방문이면
+				dfs(i, 1);
+			}
+		}
+		
+		bool ans = true;
+		for (int i = 1; i <= V; i++) { //연결되어있는 정점중에 색깔이 같은것을 찾음
+			for (int j = 0; j < graph[i].size(); j++) {
+				int next = graph[i][j];
+				if (color[i] == color[next]) { //인접한것끼리 연결이되있으면
+					ans = false;
+				}
+			}
+		}
+		if (ans) 
+			printf("YES\n");
+		else
+			printf("NO\n");
+	
+
+	}
+
+	
+	return 0;
+}

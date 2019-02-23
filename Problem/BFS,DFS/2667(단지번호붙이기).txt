@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+using namespace std;
+
+
+int dy[] = {-1,1,0,0};
+int dx[] = {0,0,1,-1};
+int n;
+//좌표
+int check[25][25]; //체크배열
+int map[25][25];
+int cnt;
+vector <int>ans;
+
+void dfs(int x,int y) {
+	
+	
+
+	check[x][y] = 1;//방문
+	cnt++;
+
+	for (int i = 0; i < 4; i++) {
+		int nx = dx[i] + x;
+		int ny = dy[i] + y; //다음방문할곳
+
+		if (nx >= 0 && nx < n && ny >= 0 && ny < n ) {
+			if (check[nx][ny] == 0 && map[nx][ny] == 1) {//미방문이고 1이면
+				dfs(nx, ny);
+			}
+			
+		}
+
+	}
+
+}
+int main() {
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			scanf("%1d",&map[i][j]);
+		}
+	}
+	int h = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (check[i][j] == 0 && map[i][j]==1) { //미방문이고 단지면
+				dfs(i, j);
+				ans.push_back(cnt);
+				cnt = 0;
+			}
+		}
+	}
+	sort(ans.begin(), ans.end());
+	cout << ans.size() << '\n';
+	for (int i = 0; i < ans.size(); i++) {
+		cout << ans[i] << "\n";
+	}
+
+	return 0;
+}
