@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+using namespace std;
+const int MAX = 200000;
+
+bool visitN[MAX+1]; //수빈이
+int cnt[MAX + 1]; //수빈이의최단경로
+
+
+queue <int>q;
+
+void bfs(int start) {
+	visitN[start] = true;
+	q.push(start);
+	cnt[start] = 0; //최단경로의길이
+	while (!q.empty()) {
+		int a = q.front();
+		q.pop();
+		
+		if (a - 1 >= 0 && visitN[a-1]==false) {
+			q.push(a - 1);
+			visitN[a - 1] = true;
+			cnt[a - 1] = cnt[a] + 1;
+		}
+		if (a+1<MAX && visitN[a+1]==false) {
+			q.push(a + 1);
+			visitN[a + 1] = true;
+			cnt[a + 1] = cnt[a] + 1;
+		}
+		if (2*a <MAX && visitN[2*a]==false) {
+			q.push(2*a);
+			visitN[2*a] = true;
+			cnt[2*a] = cnt[a] + 1;
+		}
+	}
+
+}
+
+int main() { //수빈이가갈수있는 모든최단경로에대한 계산을함
+	int N, K;
+	cin >> N >> K;
+	bfs(N);
+	cout << cnt[K] << '\n'; //K까지의 최단경로를 출력
+
+	
+
+	return 0;
+}

@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+using namespace std;
+
+
+
+
+
+vector <int>graph[101];
+
+int dfscheck[101];//몇번쨰 dfs에서 돌았는지확인
+
+void dfs(int start,int &c) {
+	dfscheck[start] = c;//방문
+
+	for (int i = 0; i < graph[start].size(); i++) {//연결되있는간선확인
+		int next = graph[start][i];//다음에방문할곳
+
+		if (dfscheck[next] == 0) { //미방문이면
+			dfs(next, c);//방문
+		}
+	}
+
+}
+
+int main() {
+	int V,E;//정점,간선
+	cin >> V; //정점번호
+	cin >> E;
+	for (int i = 0; i < E; i++) {
+		int a, b;
+		cin >> a >> b;
+		graph[a].push_back(b);
+		graph[b].push_back(a);
+	} //입력
+
+	for (int i = 1; i <= V; i++) {
+		if (dfscheck[i] == 0) { //미방문일떄 
+			dfs(i,i);//방문
+		}
+	}
+	int ans = 0;
+	for (int i = 1; i <= V; i++) {
+		if (dfscheck[i] == 1) { //1번쨰에서 체크된것들을 확인함
+			ans++;
+		}
+	}
+	cout << ans - 1 << '\n';
+	
+
+	return 0;
+}
