@@ -1,0 +1,102 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+using namespace std;
+
+int dx[4] = {-1,1,0,0};
+int dy[4] = {0,0,-1,1};
+int n;
+int map[101][101];
+int land[101][101];
+bool check[101][101];
+int cnt[101][101];//최단거리를저장
+queue<pair<int, int>>q;
+void dfs(int x,int y,int c) {
+	check[x][y] = true;//방문
+	land[x][y] = c;
+	for (int i = 0; i < 4; i++) {
+		int xn = dx[i] + x;
+		int yn = dy[i] + y;
+		if (xn >= 0 && xn < n && yn >= 0 && yn < n) {
+			if (check[xn][yn] == false && map[xn][yn]==1) {//미방문
+				dfs(xn, yn, c);
+			}
+			else
+				continue;
+		}
+	}
+}
+void bfs(int c) {
+	
+	while (!q.empty()) {
+		int a = q.front().first;
+		int b = q.front().second;
+		q.pop();
+		for (int i = 0; i < 4; i++) {
+			int xn = dx[i] + a;
+			int yn = dy[i] + b;
+			if (xn >= 0 && xn < n && yn >= 0 && yn < n) {
+				if (check[xn][yn] == false && land[xn][yn]!=c) {//미방문이고 현재섬이아니면
+					check[xn][yn] = true;
+					cnt[xn][yn] = cnt[a][b] + 1;//최단경로저장
+					q.push(make_pair(xn, yn));
+					
+				}
+			}
+			}
+		}
+	}
+
+int main() { //
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> map[i][j];
+		}
+	}//입력
+	int cnt1 = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (check[i][j] == false && map[i][j] == 1) {
+				++cnt1;
+				dfs(i, j, cnt1);
+		}//같은대륙을이어줌 (붙어있는대륙끼리 섬의번호를부여)
+		
+		}
+	}
+	memset(check, 0, sizeof(check));
+	//bfs 탐색
+	int ans = 1000000;
+
+	for (int i = 1; i <=cnt1; i++) {
+		memset(check, 0, sizeof(check));
+		memset(cnt, 0, sizeof(cnt));
+		for (int j = 0; j < n; j++) {
+			for (int z = 0; z < n; z++) {
+				if (check[j][z] == false && map[j][z] == 1 && land[j][z]==i) {//현재섬이면
+					q.push(make_pair(j, z)); //
+				}
+			}
+	}
+		bfs(i)//;해당하는섬의 bfs를구함
+		for (int k = 0; k < n; k++) {
+			for (int j = 0; j < n; j++) {
+				if (land[k][j] != i && map[k][j]==1) { //현재 섬x 다른섬o
+					ans = min(cnt[k][j], ans); 
+				}
+			}
+		}
+	
+	}
+
+	cout << ans - 1 << '\n';
+
+
+	return 0;
+}
