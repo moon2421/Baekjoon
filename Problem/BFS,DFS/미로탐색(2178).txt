@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+using namespace std;
+
+
+int map[101][101];
+bool check[101][101];
+int cnt[101][101];//가려는곳의 최단거리가 들어있음
+
+int dx[] = { 0,0,1,-1 };
+int dy[] = { 1,-1,0,0};
+
+queue <pair<int, int>> q;
+int maxx, maxy;
+
+void bfs(int x,int y) {
+	check[x][y] = true;
+	cnt[x][y] = 1;
+	q.push(make_pair(x,y));//현재좌표를넣음
+
+	while (!q.empty()) { //q가빌떄까지
+		int nx = q.front().first; //x좌표
+		int ny = q.front().second; //y좌표
+		q.pop();
+		for (int i = 0; i < 4; i++) {
+			int vx = dx[i] + nx;//방문할곳의 좌표
+			int vy = dy[i] + ny;  //방문할곳의좌표
+
+			if (vx >= 0 && vx < maxx && vy >= 0 && vy < maxy) {//이동할수있는곳 제한
+				if (check[vx][vy] == false && map[vx][vy] == 1) {//미방문이고 방문할수있는곳이면
+					cnt[vx][vy] = cnt[nx][ny] + 1; //최단거리를저장
+					check[vx][vy] = true;//방문처리
+					q.push(make_pair(vx, vy));//q에넣음	
+				}
+				else
+					continue;
+			}
+
+		}
+
+	}
+
+}
+int main() {
+
+	cin >> maxx >> maxy;
+
+	for (int i = 0; i < maxx; i++) {
+		for (int j = 0; j < maxy; j++) {
+			scanf("%1d", &map[i][j]);
+		}
+	}
+
+	for (int i = 0; i < maxx; i++) {
+		for (int j = 0; j < maxy; j++) {
+			if (check[i][j] == false && map[i][j] == 1) { //아직미방문이고 갈수있는곳이면
+				bfs(i, j); //방문
+			}
+		}
+	}
+	cout << cnt[maxx-1][maxy-1] << '\n';
+
+	return 0;
+}

@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+using namespace std;
+
+int dx[] = { 0,0,1,-1,1,1,-1,-1 };
+int dy[] = { 1,-1,0,0,1,-1,1,-1 };
+
+//좌표
+bool check[51][51]; //체크배열
+int map[51][51];
+int a, b;
+int cnt;
+void dfs(int x,int y) {
+	check[x][y] = true;
+	
+
+	for (int i = 0; i < 8; i++) {
+		int xn = dx[i] + x;
+		int yn = dy[i] + y;
+		
+		if (xn >= 0 && yn >= 0 && xn < b && yn < a) {
+			if (check[xn][yn] == false && map[xn][yn] == 1) //다음방문할곳이 false고 map이 1로되있으면
+				dfs(xn, yn);
+		}
+		else
+			continue;
+
+		
+	}
+
+}
+int main() {
+	
+	
+	while (true) {
+		memset(map, 0, sizeof(map));
+		memset(check, false, sizeof(check));
+
+		cin >> a >> b;
+		if (a == 0 && b == 0)
+			return 0;
+
+		for (int i = 0; i < b; i++) { //들어오는값잘살핌
+			for (int j = 0; j < a; j++) {
+				cin >> map[i][j];
+			}
+		}
+		//0이면 바다 1이면 땅
+		cnt = 0;
+		for (int i = 0; i < b; i++) {
+			for (int j = 0; j < a; j++) {
+				if (map[i][j] == 1 && check[i][j] == false) { //미방문이고 섬이면 
+					dfs(i,j); //방문
+					++cnt;
+				}
+			}
+		}
+		cout << cnt << '\n';
+	}
+	return 0;
+}

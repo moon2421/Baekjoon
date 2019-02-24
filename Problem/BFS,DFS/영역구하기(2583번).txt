@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <utility>
+using namespace std;
+
+int dx[] = { 0,0,1,-1 };
+int dy[] = { 1,-1,0,0};
+
+//ÁÂÇ¥
+bool check[101][101]; //Ã¼Å©¹è¿­
+int map[101][101];
+int cnt;
+int M, N, K;
+vector <int>ans;
+void dfs(int x,int y) {
+	check[x][y] = true;
+	cnt++;
+
+	for (int i = 0; i < 4; i++) {
+		int nx = dx[i] + x;
+		int ny = dy[i] + y;
+
+
+		if (nx >= 0 && nx < N && ny >= 0 && ny < M) {
+			if (check[nx][ny] == false && map[nx][ny] == 0) {
+				dfs(nx, ny);
+			}
+			else
+				continue;
+		}
+	}
+
+}
+
+int main() {
+	
+	cin >> M >> N >> K;
+
+	while (K--)
+	{
+		int a, b,c,d;
+		cin >> a >> b>>c>>d;
+		for (int i = a; i < c; i++) { //a´Â xÁÂÇ¥ÀÇ½ÃÀÛÁ¡ c´Â xÁÂÇ¥ÀÇ³¡
+			for (int j = b; j < d; j++) { //b´Â yÁÂÇ¥ÀÇ½ÃÀÛÁ¡ d´Â yÁÂÇ¥ÀÇ³¡
+				map[i][j] = 1;
+				check[i][j] = true;
+			}
+		}
+	}//ÀÔ·Â
+	//Å½»ö
+	for (int i = 0; i < N; i++) {//dfsÅ½»ö
+		for (int j = 0; j < M; j++) {
+			if (check[i][j] == false && map[i][j] == 0) {
+				cnt = 0;
+				dfs(i, j);
+				ans.push_back(cnt);
+				
+			}
+		}
+	}
+	sort(ans.begin(),ans.end());
+	cout << ans.size() << '\n';
+
+	for (int i = 0; i < ans.size(); i++) {
+		printf("%d ", ans[i]);
+	}
+
+	
+	return 0;
+}
