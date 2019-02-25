@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+using namespace std;
+
+int main() {
+	int n;
+	int input;
+	cin >> n;//입력
+	vector<int>a(n);
+	vector<int>b(n);
+	for (int i = 0; i < a.size(); i++) {
+		cin >> input;
+		a[i] = input;
+	}//a입력
+
+	for (int i = 0; i < b.size(); i++) {
+		cin >> input;
+		b[i] = input;
+	}//b입력
+	
+	//a를 오름차순으로 정렬
+	sort(a.begin(), a.end(),greater<int>());
+	//b를 내림차순으로 정렬
+	sort(b.begin(), b.end(),less<int>()); 
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += a[i] * b[i];
+	}
+	cout << sum << '\n';
+	
+	//S의값을  가장 작게만들기위해서는 a에서 작은값 * b에서 큰값 이런식으로 만들어주면된다.
+
+	
+
+
+
+	return 0;
+}

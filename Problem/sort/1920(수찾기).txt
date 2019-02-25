@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+using namespace std;
+
+int arr[100001];
+int main() { //
+	int n;
+	int a;
+
+	vector<int>v;
+	vector<int>ans;
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &a);
+		v.push_back(a);
+	}
+	sort(v.begin(), v.end());
+	
+
+	scanf("%d", &n);
+		//정렬된 것들의 값중에서 해당하는값이 있는지 확인하기 위해 이분탐색을 사용
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &a);
+		bool tmp=binary_search(v.begin(), v.end(), a);
+	
+		if (tmp) //존재하면
+			arr[i] = 1;
+		else
+			arr[i] = 0;
+	}
+	
+	for (int i = 0; i <n; i++) {
+		printf("%d\n", arr[i]);
+	}
+
+
+
+	return 0;
+}

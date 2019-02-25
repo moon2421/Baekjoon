@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+using namespace std;
+
+
+
+vector<pair<int, int>>v;
+vector<int>ans;
+
+int main() {
+	for (int i = 0; i < 4; i++) {
+		int a;//내리는사람
+		int b;//타는사람
+		cin >> a >> b;
+		v.push_back(make_pair(a, b));//내린사람과탄사람이저장
+	}
+	ans.push_back(v.front().second); //처음에타는사람
+
+	for (int i = 1; i < 4; i++) {//2번쨰부터시작
+		int c = ans[i-1] - v[i].first; //현재탄사람 -내리는사람
+		int k = c + v[i].second; //새로타는타는사람
+
+		ans.push_back(k);
+	}
+	//ans에는 각 역의 사람수가 있음
+
+	int answer = 0;
+	for (int i = 0; i < ans.size(); i++) {
+		answer=max(answer, ans[i]);
+	}
+	cout << answer << '\n';
+
+
+	return 0;
+}
