@@ -1,0 +1,55 @@
+aabbcc
+xxyybb
+
+두개의 단어가있을떄 애너그램이되기위해서는
+첫번쨰 문자열에는 bb만있어야되고 두번쨰문자열에도 bb만있어야된다
+즉 첫번쨰문자열과 두번쨰문자열이같으면 애너그램이다
+그런데 만약에 첫번째문자열과 두번쨰문자열이 애너그램이될래면 같은거를 제외한것은 없어야하므로 
+aa , cc xx yy 가없어야한다 총 8개
+
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+
+int alpha1[26];
+int alpgh2[26];
+int main() {
+	string s1;
+	string s2;
+
+	cin >> s1;
+	cin >> s2;
+	for (int i = 0; i < s1.size(); i++) {
+		alpha1[s1[i] - 'a'] += 1;
+	} //s1에해당하는 문자의개수를 채움
+	for (int i = 0; i < s2.size(); i++) {
+		alpgh2[s2[i] - 'a'] += 1;
+	}//s2에해당하는 문자의개수를 채움
+
+	//두개의 문자가같아 애너그램을 형성할수있음 다르면 애너그램x
+	int cnt = 0;
+	for (int i = 0; i < 26; i++) {
+		if (alpgh2[i] != alpha1[i]) {//문자의개수가 같지않다면
+		cnt+=abs(alpgh2[i] - alpha1[i]);
+		}
+	}
+	cout << cnt << '\n';
+	
+	return 0;
+}
+		
+
+	
+	
+

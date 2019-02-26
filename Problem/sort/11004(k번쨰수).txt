@@ -1,0 +1,46 @@
+K번쨰수 이문제는 퀵소트를 응용해서풀어야됨
+
+라이브러리에있는 nth_element를이용한다
+
+void nth_element(T first,T nth, T last);
+1. T의 first부터 last까지의 수들을 오름차순으로 정리했을 때 앞에서 n 번째 수를 기준으로 왼쪽에는 작거나 같은 수, 오른쪽에는 큰 수로 정리한다
+2. n 번째 순으로 구분을 짓는 거지 완벽한 정렬을 하지는 않는다 
+3. 반환값은 없다
+
+앞에서부터 k개만정렬
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+
+
+int arr[5000001];
+
+int main() {
+	int n,k;
+	scanf("%d %d", &n, &k);
+	k -= 1;
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &arr[i]);
+	}
+	
+	nth_element(arr, arr + k, arr + n);
+		printf("%d\n", arr[k]);
+
+	return 0;
+}
+		
+
+	
+	
+
+

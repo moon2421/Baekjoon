@@ -1,0 +1,36 @@
+숫자의개수
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+int arr[10];
+int main() {
+	int a, b, c;
+	int result;
+	cin >> a >> b >> c;
+	result = a * b*c;
+	string ans = to_string(result);//정수를 문자열로
+
+	for (int i = 0; i < ans.size(); i++) {
+		arr[ans[i] - '0']++;
+	}
+	for (int i = 0; i < 10; i++) {
+		cout << arr[i] << '\n';
+	}
+	
+	return 0;
+}
+		
+
+	
+	
+

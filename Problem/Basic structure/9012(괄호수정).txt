@@ -1,0 +1,44 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <queue>
+#include <stack>
+#include <string>
+using namespace std;
+
+#include <iostream>
+#include <string>
+using namespace std;
+string valid(string s) {
+    int cnt = 0;
+    for (int i=0; i<s.size(); i++) {
+        if (s[i] == '(') {
+            cnt += 1;
+        } else {
+            cnt -= 1;
+        }
+        if (cnt < 0) {
+            return "NO";
+        }
+    }
+    if (cnt == 0) {
+        return "YES";
+    } else {
+        return "NO";
+    }
+}
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        cout << valid(s) << '\n';
+    }
+    return 0;
+}
+열린괄호면 증가하고 닫힌괄호면 감소하게된다.
+즉 괄호의쌍이 맞으면 올바른괄호이고 cnt값은0이된다
+괄호의쌍이 안맞으면 cnt는 양수가된다
+그런데 만약 cnt값이 음수가되면 스택내에 열린 괄호가 존재하지않는데들어간것이므로 바로 종료시킨다 

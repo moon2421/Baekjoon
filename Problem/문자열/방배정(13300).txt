@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+int arr[7][2];
+int main() {
+	int N, K; //참가하는학생수, 방의최대인원수
+	cin >> N >> K;
+	
+	for (int i = 0; i < N; i++) {
+		int s, y; //성별 학년
+		cin >> s >> y;
+		arr[y][s]++;
+	}
+	int cnt = 0;
+	
+	for (int i = 1; i <= 6; i++) {
+		for (int j = 0; j < 2; j++) {
+			if (arr[i][j] % K == 0) { //방이인원이맞음
+				cnt += arr[i][j] / K;
+			}
+			else
+				cnt += arr[i][j] / K + 1; //방인원이x
+
+
+		}
+	}
+
+	cout << cnt << '\n';
+
+	
+	return 0;
+}
+		
+
+	
+	
+
