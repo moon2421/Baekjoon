@@ -1,0 +1,70 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+#include <stack>
+#include<string>
+using namespace std;
+
+
+int dx[] = { 0,0,1,-1 };
+int dy[] = { 1,-1,0,0 };
+bool check[501][501];
+int map[501][501];
+int dfscheck[501];
+int cnt = 0;
+int k = 0;
+int n, m;
+
+단지번호붙이기랑 비슷
+void dfs(int x, int y) {
+	check[x][y] = true;//방문처리
+	dfscheck[cnt] = ++k;
+	for (int i = 0; i < 4; i++) {
+		int xn = dx[i] + x;
+		int yn = dy[i] + y; //이동할좌표
+
+		if (xn >= 0 && xn < n && yn >= 0 && yn < m) {
+			if (check[xn][yn] == false && map[xn][yn] == 1) {//미방문이고
+				dfs(xn, yn);
+			}
+		}
+
+	}
+
+}
+
+int main() {
+
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> map[i][j];
+		}
+	}
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (check[i][j] == false && map[i][j] == 1) { //방문을 x
+				dfs(i, j);
+				cnt++;
+				k = 0;
+
+			}
+		}
+	}
+
+	int ans = 0;
+	for (int i = 0; i < cnt; i++) {
+		ans = max(ans, dfscheck[i]);
+	}
+	cout << cnt << '\n';
+	cout << ans << '\n';
+
+
+
+	return 0;
+}
+
+

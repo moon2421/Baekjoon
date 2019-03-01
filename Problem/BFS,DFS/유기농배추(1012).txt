@@ -1,0 +1,70 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+#include <stack>
+#include<string>
+#include <cstring>
+using namespace std;
+
+
+int dx[] = { 0,0,1,-1 };
+int dy[] = { 1,-1,0,0 };
+bool check[51][51];
+int map[51][51];
+int garo, sero, n;//가로,세로 ,배추개수
+int cnt = 0;
+
+void dfs(int x, int y) {
+	check[x][y] = true; //방문완료
+	for (int i = 0; i < 4; i++) {
+		int xn = dx[i] + x;
+		int yn = dy[i] + y;
+
+		if (xn >= 0 && yn >= 0 && xn < garo && yn < sero) {
+			if (check[xn][yn] == false && map[xn][yn] == 1) {
+				dfs(xn, yn);
+			}
+			else
+				continue;
+		}
+	}
+
+}
+
+int main() {
+	int testcase;
+	cin >> testcase;
+	while (testcase--) {
+
+		cin >> garo >> sero >> n;
+		memset(map, 0, sizeof(map));
+		memset(check, false, sizeof(check));
+
+		for (int i = 0; i < n; i++) {
+			int x, y;
+			cin >> x >> y;//배추의위치를 입력
+			map[x][y] = 1;
+		}
+
+
+		for (int i = 0; i < garo; i++) {
+			for (int j = 0; j < sero; j++) {
+				if (map[i][j] == 1 && check[i][j] == false) {//배추일때만방문
+					dfs(i, j);
+					cnt++;
+					
+				}
+			}
+		}
+		cout << cnt << '\n';
+		cnt = 0;
+	}
+
+
+
+	return 0;
+}
+
+

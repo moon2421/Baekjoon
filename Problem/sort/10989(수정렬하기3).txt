@@ -1,0 +1,44 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+#include <stack>
+#include<string>
+#include <cstring>
+using namespace std;
+
+
+이 수는 10,000보다 작거나 같은 자연수이다.
+이단서를 통해 계수정렬을 수행하였습니다.
+int cnt[10001];
+
+int main() {
+	int n;
+	cin.tie(NULL); 	ios::sync_with_stdio(false);
+	cin >> n;
+	memset(cnt, 0, sizeof(cnt));
+
+	for (int i = 0; i < n; i++) {
+		int k;
+		cin >> k; //입력
+		cnt[k]++;//입력한것의 개수를 셈 계수정렬
+	}
+
+	
+	for (int i = 1; i <= 10000; i++) {
+		if (cnt[i] !=0) { //0이아닐떄만셈
+			for (int j = 0; j < cnt[i]; j++) {//cnt i의 개수만큼
+				printf("%d\n", i);
+			}
+		}
+
+	}
+	
+
+
+
+	return 0;
+}
+
+
