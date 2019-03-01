@@ -1,0 +1,66 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+using namespace std;
+deque<int> dq;
+
+int arr[50];
+int cnt = 0;
+int main() {
+	int rpos = 0;
+	int N, M;//크기 뽑아내려는수
+	cin >> N >> M;
+
+	for (int i = 1; i <= N;i++ ) {
+		dq.push_back(i);
+	}
+	for (int i = 0; i < M; i++) {
+		cin >> arr[i];
+	}//찾으려는값 입력
+	deque<int>::iterator iter; //iterator를이용
+	
+	while (true) {
+		int a=0;
+		
+		iter = dq.begin();
+		if (rpos == M) {
+			break;
+		}
+		for (iter; iter != dq.end(); ++iter) {
+			if (*iter == arr[rpos]) {
+				break;
+			}
+			a++;
+		}//iterator를 이용해서 dq안에있는원소의위치를찾음
+		int left = a; //왼쪽에서의위치
+		int right = dq.size()-a; //오른쪽에서의위치
+		
+		if (left < right) {//왼쪽에더가까우면 오른쪽으로옮김
+			for (int i = 0; i < left; i++) {
+				int tmp = dq.front();
+				dq.pop_front();//앞에있는것을 뺴고
+				dq.push_back(tmp);//뒤에다시넣음
+				cnt++; //연산횟수를누적
+			}
+			dq.pop_front();//뺌
+			
+		}
+		else { //오른쪽에가까우면 뒤에서는 해당 숫자도 포함해서 앞에까지이동
+			for (int i = 0; i < right; i++) {
+				int tmp = dq.back();
+				dq.pop_back();//뒤에꺼를뺴고
+				dq.push_front(tmp);//앞에넣음
+				cnt++;
+			}
+			dq.pop_front();//뺌
+			
+		}
+		rpos++;
+	}
+	cout << cnt << '\n';
+
+	return 0;
+}
+
+

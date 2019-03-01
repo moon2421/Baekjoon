@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+int miro[1001][1001];
+int dp[1001][1001];
+int main() {
+	int N, M;
+	cin >> N >> M;
+
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= M; j++) {
+			int candy;
+			cin >> candy;
+			miro[i][j] = candy;
+		
+		}
+	}//미로입력
+
+	//각방향에대한 최대값을가진것에대해 현재값과더하면됨
+	//대각선방향은 고려안해도 최대값이나올수가있음
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= M; j++) {
+			dp[i][j] = max(dp[i - 1][j],max(dp[i][j - 1],dp[i-1][j-1])) + miro[i][j];
+			
+		}
+	}
+	//메모한값을 쓰기위해서는 반대로생각
+	//dp안에는 각 좌표의 최대값이들어가있음
+	cout << dp[N][M] << '\n';
+}
+
+	
+	
+

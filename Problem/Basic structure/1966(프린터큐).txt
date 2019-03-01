@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <cstring>
+#include <queue>
+#include <utility>
+#include <string>
+#include <functional>
+
+using namespace std;
+
+
+// 중요도가 높은거부터 빼는게 우선이다
+//우선순위큐에 중요도를 저장하고 큐에는 먼저들어간 인덱스와 해당인덱스의중요도가들어가있음
+
+int main() {
+	int testcase;
+	cin >> testcase;
+	while (testcase--) {
+		int cnt = 0;
+		queue<pair<int, int>>q;
+		priority_queue<int > pq;//우선순위를 담음
+		int N, M; //N=문서의수 M=QUEUE의어떤위치
+		cin >> N >> M;
+		int point;
+		for (int i = 0; i < N; i++) {
+			scanf("%d", &point);//중요도입력
+			q.push(make_pair(point, i)); //중요도와 해당인덱스가들어감
+			pq.push(point); //중요도가 들어감
+		}
+		while (!q.empty()) {
+			int a = q.front().first; //중요도
+			int b = q.front().second; //인덱스값
+			q.pop();
+			if (pq.top() == a) {//중요도가같으면
+				pq.pop();
+				cnt++;
+				if (b == M) { //M번과같다면
+					cout << cnt << '\n';
+					break;
+				}
+			}
+			else { //같지않으면
+					q.push(make_pair(a, b));//다시집어넣음
+			}
+
+				
+			
+
+		}
+
+		
+	}
+
+
+}
+
+	
+	
+

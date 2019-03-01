@@ -1,0 +1,53 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+#include <stack>
+#include<string>
+using namespace std;
+
+
+stack<pair<int,int>>st;
+
+
+
+int main() {
+	int n;
+	cin >> n;
+
+	//인덱스를 저장하는게핵심 + 앞에서부터 차례차례해결
+	for (int i = 1; i <=n; i++) {
+		int data;
+		cin >> data;
+
+		while(!st.empty()) { //스택이 비지않음 x
+			if (st.top().first < data) { //송신이 불가한 탑이면
+				st.pop(); //뺀다. 
+
+			}
+			else {//현재탑에서 이전탑 레이저가 송신이가능하면
+				printf("%d ",st.top().second);//출력한다
+				st.push(make_pair(data, i));
+				break;
+			}
+
+		}
+
+		if (st.empty()) {//스택이비어있으면
+			st.push(make_pair(data, i));
+			printf("0 ");
+		}
+	
+		
+		
+
+
+
+	}
+
+
+	return 0;
+}
+
+

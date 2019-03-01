@@ -1,0 +1,38 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+using namespace std;
+
+
+int a[20];
+int main() {
+	int n;
+	int y, m;
+	int y1 = 0;
+	int m1 = 0;
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+		y = a[i] / 30 + 1;
+		y *= 10;
+		y1 += y;
+		m = a[i] / 60 + 1;
+		m *= 15;
+		m1 += m;
+	}
+
+	if (y < m)
+		printf("Y %d", y1);
+	else if (y == m)
+		printf("Y M %d", y1);
+
+	else
+		printf("M %d", m1);
+
+	return 0;
+}
+
+
