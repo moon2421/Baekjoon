@@ -1,0 +1,117 @@
+#include <cstdio>
+#include <algorithm>
+#include <deque>
+#include<iostream>
+#include<queue>
+#include <stack>
+#include<string>
+#include <cstring>
+using namespace std;
+
+
+
+stack <pair<int,string>>st;
+
+int main() {
+	string s;
+	cin >> s;
+	int sum = 0;
+	
+	//인덱스차이로구별
+	for (int i = 0; i < s.size(); i++) {
+		sum = 0;
+			if (s[i] == '(') {
+				st.push(make_pair(i, "("));
+			}
+			else if (s[i] == '[') {
+				st.push(make_pair(i, "["));
+			}
+			 
+			else if (s[i] == ')' && !st.empty()) {
+				if (st.top().second == "(") {
+					if (st.top().first + 1 == i) { //인덱스차이가 1이나면
+						st.pop();
+						st.push(make_pair(i, "2"));
+					}		
+				}
+				else  {
+					int tmp;
+					while (!st.empty()) {
+						string t = st.top().second;
+						if (t == "[") {
+							cout << "0";
+							return 0;
+						}
+
+						else if(t=="("){ //열린괄호면
+						st.pop();
+						sum *= 2;
+						st.push(make_pair(i,to_string(sum)));
+						break;
+						}
+
+						else {
+							tmp = stoi(st.top().second); //문자열을 정수로
+							sum += tmp;
+							st.pop();
+						}
+					}
+				}
+
+			}
+			else if (s[i] == ']' && !st.empty()) {
+				if (st.top().second == "[") {
+					if (st.top().first + 1 == i) {
+						st.pop();
+						st.push(make_pair(i, "3"));
+					
+					}
+				}
+				else {
+					int tmp;
+					while (!st.empty()) {
+						string t = st.top().second;
+						if (t == "(") {
+							cout << "0";
+							return 0;
+						}
+
+						else if (t == "[") { //열린괄호면
+							st.pop();
+							sum *= 3;
+							st.push(make_pair(i, to_string(sum)));
+							break;
+						}
+						else {
+							tmp = stoi(st.top().second); //문자열을 정수로
+							sum += tmp;
+							st.pop();
+						}
+					}
+				}
+			}
+	}
+
+	int ans = 0;
+
+
+
+	if (!st.empty() ) { //여기까지 숫자만남아있어야됨
+		while (!st.empty()) {
+			if (st.top().second == "(" || st.top().second == ")" || st.top().second == "[" || st.top().second == "]") {
+				cout << "0";
+				return 0;
+			}
+		ans+=stoi(st.top().second);
+		st.pop();
+		}
+		cout << ans;
+	}
+	
+
+
+
+	return 0;
+}
+
+
